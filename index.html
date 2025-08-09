@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Генератор паролей и никнеймов</title>
+<style>
+    :root {
+        --bg: #ffffff;
+        --text: #000000;
+        --button-bg: #007bff;
+        --button-text: #ffffff;
+    }
+    [data-theme="dark"] {
+        --bg: #121212;
+        --text: #ffffff;
+        --button-bg: #00bfff;
+        --button-text: #000000;
+    }
+    body {
+        font-family: Arial, sans-serif;
+        background-color: var(--bg);
+        color: var(--text);
+        margin: 0;
+        padding: 20px;
+        transition: 0.3s;
+    }
+    h1 {
+        text-align: center;
+    }
+    .container {
+        max-width: 500px;
+        margin: auto;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    button {
+        background-color: var(--button-bg);
+        color: var(--button-text);
+        border: none;
+        padding: 10px 20px;
+        margin: 5px;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 16px;
+        transition: 0.2s;
+    }
+    button:hover {
+        opacity: 0.8;
+    }
+    .output {
+        font-size: 18px;
+        padding: 10px;
+        border: 1px solid var(--text);
+        border-radius: 5px;
+        margin-top: 10px;
+        word-break: break-all;
+        text-align: center;
+    }
+    .theme-toggle {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        padding: 5px 10px;
+    }
+    input {
+        padding: 8px;
+        font-size: 16px;
+        width: 80%;
+        margin: 5px 0;
+        border: 1px solid var(--text);
+        border-radius: 5px;
+        background: var(--bg);
+        color: var(--text);
+    }
+    footer {
+        text-align: center;
+        font-size: 14px;
+        margin-top: 40px;
+        padding: 10px;
+        border-top: 1px solid var(--text);
+        opacity: 0.8;
+    }
+    .ad-block {
+        text-align: center;
+        margin: 20px 0;
+        padding: 10px;
+        border: 1px dashed var(--text);
+        border-radius: 5px;
+        font-size: 14px;
+        opacity: 0.7;
+    }
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" onclick="toggleTheme()">🌙/☀</button>
+
+<div class="container">
+    <h1>🔑 Генератор паролей</h1>
+    <button onclick="generatePassword()">Сгенерировать пароль</button>
+    <button onclick="copyText('passwordOutput')">Скопировать</button>
+    <div class="output" id="passwordOutput"></div>
+</div>
+
+<!-- Рекламный блок -->
+<div class="ad-block">
+    🔸 Реклама (сюда вставить код Google AdSense) 🔸
+</div>
+
+<div class="container">
+    <h1>🎮 Генератор никнеймов</h1>
+    <input type="text" id="nickBase" placeholder="Введи основу ника...">
+    <button onclick="generateNick()">Сгенерировать ник</button>
+    <button onclick="copyText('nickOutput')">Скопировать</button>
+    <div class="output" id="nickOutput"></div>
+</div>
+
+<footer>
+    Создано <a href="https://t.me/F1WilliamsFan" target="_blank">Akva</a> | © 2025
+</footer>
+
+<script>
+function generatePassword() {
+    const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
+    let pass = "";
+    for (let i = 0; i < 12; i++) {
+        pass += chars[Math.floor(Math.random() * chars.length)];
+    }
+    document.getElementById("passwordOutput").innerText = pass;
+}
+
+const words = ["Dark", "Light", "Fire", "Shadow", "Wolf", "Dragon", "Sky", "Night", "Moon", "Sun", "Storm", "Blade", "King", "Pro", "X"];
+function generateNick() {
+    let base = document.getElementById("nickBase").value.trim();
+    if (!base) {
+        alert("Введите основу ника!");
+        return;
+    }
+    const randomWord = words[Math.floor(Math.random()*words.length)];
+    const number = Math.floor(Math.random()*999);
+    let nick;
+    if (Math.random() > 0.5) {
+        nick = randomWord + base + number;
+    } else {
+        nick = base + randomWord + number;
+    }
+    document.getElementById("nickOutput").innerText = nick;
+}
+
+function copyText(elementId) {
+    const text = document.getElementById(elementId).innerText;
+    if (!text) return;
+    navigator.clipboard.writeText(text);
+    alert("Скопировано!");
+}
+
+function toggleTheme() {
+    document.body.dataset.theme = document.body.dataset.theme === "dark" ? "light" : "dark";
+}
+document.body.dataset.theme = "light";
+</script>
+
+</body>
+</html>
